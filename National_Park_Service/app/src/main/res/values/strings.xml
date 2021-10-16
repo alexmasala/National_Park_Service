@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Seminar1</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btn_login">Login</string>
+    <string name="tb_nume">Nume</string>
+    <string name="tv_hello">Hello world!</string>
+    <string name="tb_authentication">Authentication</string>
+    <string name="tb_email">Email</string>
+    <string name="tb_parola">Parola</string>
+    <string name="btn_register">Register</string>
+    <string name="tb_phone">Telefon</string>
+</resources>
