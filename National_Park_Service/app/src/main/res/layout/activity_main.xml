@@ -38,7 +38,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2"
+        app:layout_constraintTop_toBottomOf="@+id/etParola"
         app:layout_constraintVertical_bias="0.175" />
 
     <ImageView
@@ -61,17 +61,17 @@
         android:text="@string/tb_authentication"
         android:textColor="@color/bloody_red"
         android:textSize="18sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName" />
+        app:layout_constraintBottom_toTopOf="@+id/etEmail"
+        app:layout_constraintEnd_toEndOf="@+id/etEmail" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/etEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="220dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/tb_email"
+        android:inputType="textEmailAddress"
+        android:hint="@string/tb_email"
         android:textColor="@color/dark_red"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -79,15 +79,15 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/etParola"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:text="@string/tb_parola"
+        android:inputType="textPassword"
+        android:hint="@string/tb_parola"
         android:textColor="@color/dark_red"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintStart_toStartOf="@+id/etEmail"
+        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
