@@ -1,5 +1,6 @@
 package ro.ase.seminar1;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -7,11 +8,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 private Button btnRegister;
 private Button btnLogin;
+private EditText eTParola;
+private EditText eTEmail;
+private final int MainActivityRequest = 100;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +34,16 @@ private Button btnLogin;
 
         Log.v("lifecycle","onCreate");
 
+        eTEmail = findViewById(R.id.etEmail);
+        eTParola = findViewById(R.id.etParola);
         btnRegister = findViewById(R.id.btn_register);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"Inregistrat cu succes!", Toast.LENGTH_LONG).show();
                 Intent newWindow = new Intent(MainActivity.this, RegisterActivity.class);
-                startActivity(newWindow);
+                //startActivity(newWindow);
+                startActivityForResult(newWindow, MainActivityRequest);
+
             }
         });
 
@@ -47,6 +56,20 @@ private Button btnLogin;
                 startActivity(newWindow);
             }
         });
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == MainActivityRequest) {
+            if (resultCode == RESULT_OK) {
+                if (data!=null) {
+                    Bundle newBundle = data.getBundleExtra("raspunsBundle");
+                    Persoana persoana = (Persoana)newBundle.getSerializable("persoana");
+                    eTEmail.setText(persoana.getEmail().toString());
+                    eTParola.setText(persoana.getParola().toString());
+                }
+            }
+        }
     }
 
     @Override
