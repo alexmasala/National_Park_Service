@@ -1,114 +1,63 @@
 package ro.ase.seminar1;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
-private Button btnRegister;
-private Button btnLogin;
-private EditText eTParola;
-private EditText eTEmail;
-private final int MainActivityRequest = 100;
+import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+public class MainActivity extends AppCompatActivity {
+
+    private ListView listview;
+    private MeniuAdapter meniuAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.v("oncreate", "Suntem in onCreate");
-        Log.e("oncreate", "-eroare");
-        Log.d("oncreate", "-debug");
-        Log.i("oncreate", "-info");
 
-        //argumentele lui makeText: un context, un msj care se afiseaza + cat timp sta msjul
-        //fara show() nu ar afisa
-        Toast.makeText(this,"Mesaj misto", Toast.LENGTH_LONG).show();
-
-        Log.v("lifecycle","onCreate");
-
-        eTEmail = findViewById(R.id.etEmail);
-        eTParola = findViewById(R.id.etParola);
-        btnRegister = findViewById(R.id.btn_register);
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        meniuAdapter = new MeniuAdapter(getParcuri());
+        listview = findViewById(R.id.listview);
+        listview.setAdapter(meniuAdapter);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                Intent newWindow = new Intent(MainActivity.this, RegisterActivity.class);
-                //startActivity(newWindow);
-                startActivityForResult(newWindow, MainActivityRequest);
-
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Random rnd = new Random(1);
+                int rnd_int = rnd.nextInt();
+                if(rnd_int%2==0)
+                    meniuAdapter.update_list(getParcuri());
+                else meniuAdapter.update_list(getParcuri2());
             }
         });
-
-        btnRegister = findViewById(R.id.btn_login);
-        btnRegister.setOnClickListener(new View.OnClickListener() {
+        listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this,"Logare cu succes!", Toast.LENGTH_LONG).show();
-                Intent newWindow = new Intent(MainActivity.this, Activitate1.class);
-                startActivity(newWindow);
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                meniuAdapter.getItem(position);
+                Toast.makeText(MainActivity.this, meniuAdapter.getItem(position).toString(),Toast.LENGTH_LONG).show();
+                return false;
             }
         });
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == MainActivityRequest) {
-            if (resultCode == RESULT_OK) {
-                if (data!=null) {
-                    Bundle newBundle = data.getBundleExtra("raspunsBundle");
-                    Persoana persoana = (Persoana)newBundle.getSerializable("persoana");
-                    eTEmail.setText(persoana.getEmail().toString());
-                    eTParola.setText(persoana.getParola().toString());
-                }
-            }
-        }
+    private List<Parc> getParcuri(){
+        List<Parc> lst = new ArrayList<>();
+        lst.add(new Parc("Parcul din Craiova","09:00 - 22:00","Traseul Solomon"));
+        lst.add(new Parc("Parcul din Cluj","09:00 - 22:00","Traseul Dubrava"));
+        lst.add(new Parc("Parcul din Bucuresti","09:00 - 22:00","Traseul Apalachia"));
+        return lst;
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        Log.v("lifecycle","onStart");
-
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        Log.v("lifecycle","onResume");
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-
-        Log.v("lifecycle","onPause");
-
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        Log.v("lifecycle","onStop");
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        Log.v("lifecycle","onDestroy");
-
+    private List<Parc> getParcuri2(){
+        List<Parc> lst = new ArrayList<>();
+        lst.add(new Parc("Parcul din Craiova","10:00 - 22:00","Traseul Solo"));
+        lst.add(new Parc("Parcul din Cluj","11:00 - 22:00","Traseul Dub"));
+        lst.add(new Parc("Parcul din Bucuresti","10:00 - 22:00","Traseul Apa"));
+        return lst;
     }
 }
