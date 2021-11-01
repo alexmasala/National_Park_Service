@@ -11,7 +11,8 @@
         android:theme="@style/Theme.Seminar1">
         <activity android:name=".RegisterActivity"></activity>
         <activity android:name=".Activitate1" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
