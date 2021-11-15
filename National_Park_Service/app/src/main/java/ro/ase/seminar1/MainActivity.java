@@ -16,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView listview;
     private MeniuAdapter meniuAdapter;
+    private JSONRead jsonRead;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +27,15 @@ public class MainActivity extends AppCompatActivity {
         meniuAdapter = new MeniuAdapter(getParcuri());
         listview = findViewById(R.id.listview);
         listview.setAdapter(meniuAdapter);
+
+
         listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Random rnd = new Random(1);
                 int rnd_int = rnd.nextInt();
-                if(rnd_int%2==0)
-                    meniuAdapter.update_list(getParcuri());
-                else meniuAdapter.update_list(getParcuri2());
+                meniuAdapter.update_list(getParcuri());
+//                else meniuAdapter.update_list(getParcuri2());
             }
         });
         listview.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -43,6 +46,42 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
+
+        jsonRead= new JSONRead();
+
+        Thread thread=new Thread(new Runnable() {
+            @Override
+            public void run() {
+                jsonRead.read("https://jsonkeeper.com/b/G66N", new IResponse() {
+                    @Override
+                    public void onSuccess(List<Parc> list) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+//                                        meniuAdapter.update_list(getParcuri());
+
+                                meniuAdapter.update_list(list);
+
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(MainActivity.this,errorMessage,Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                    }
+                });
+
+            }
+        });
+        thread.start();
     }
 
     private List<Parc> getParcuri(){

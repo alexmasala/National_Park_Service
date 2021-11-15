@@ -6,11 +6,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MeniuAdapter extends BaseAdapter {
 
-    private List<Parc> lista;
+    private List<Parc> lista = new ArrayList<>();
 
     public MeniuAdapter(List<Parc> lista){
         this.lista = lista;
@@ -45,8 +46,10 @@ public class MeniuAdapter extends BaseAdapter {
     }
 
     public void update_list(List<Parc> lista_noua){
-        this.lista.clear();
-        this.lista.addAll(lista_noua);
+//        this.lista.clear();
+//        this.lista.addAll(lista_noua);
+        lista_noua.clear();
+        lista_noua.addAll(lista);
         notifyDataSetChanged();
     }
 }
