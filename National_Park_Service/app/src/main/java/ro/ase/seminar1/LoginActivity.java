@@ -9,7 +9,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class LoginActivity extends AppCompatActivity {
 private Button btnRegister;
@@ -17,7 +21,9 @@ private Button btnLogin;
 private EditText eTParola;
 private EditText eTEmail;
 private final int MainActivityRequest = 100;
-
+private ParcDAO parcDAO;
+private MeniuAdapter meniuAdapter;
+private ListView lv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +60,21 @@ private final int MainActivityRequest = 100;
                 Toast.makeText(LoginActivity.this,"Logare cu succes!", Toast.LENGTH_LONG).show();
                 Intent newWindow = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(newWindow);
+
+                Thread thread1 = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        parcDAO = Database.getInstance(LoginActivity.this).getDataBase().parcDAO();
+                        for (int i=0;i<getParcuri().size();i++){
+                            parcDAO.insert(getParcuri().get(i));
+                        }
+                    }
+                });
+                thread1.start();
             }
         });
+
+
     }
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -70,6 +89,14 @@ private final int MainActivityRequest = 100;
                 }
             }
         }
+    }
+
+    private List<Parc> getParcuri(){
+        List<Parc> lst = new ArrayList<>();
+        lst.add(new Parc("Parcul din Craiova","09:00 - 22:00","Traseul Solomon",20));
+        lst.add(new Parc("Parcul din Cluj","09:00 - 22:00","Traseul Dubrava",10));
+        lst.add(new Parc("Parcul din Bucuresti","09:00 - 22:00","Traseul Apalachia",15));
+        return lst;
     }
 
     @Override

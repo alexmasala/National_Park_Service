@@ -63,8 +63,9 @@ public class JSONRead {
                 String localizare=jsonObject.getString("localizare");
                 String program=jsonObject.getString("program");
                 String traseuturistic=jsonObject.getString("traseuturistic");
+                int pret =jsonObject.getInt("pret");
 
-                Parc parc=new Parc(localizare,program,traseuturistic);
+                Parc parc=new Parc(localizare,program,traseuturistic,pret);
                 listaJSON.add(parc);
 
             }
