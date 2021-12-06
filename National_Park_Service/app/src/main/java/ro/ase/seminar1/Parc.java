@@ -1,14 +1,35 @@
 package ro.ase.seminar1;
 
-public class Parc {
-    private String localizare;
-    private String program;
-    private String traseuTuristic;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
-    public Parc(String localizare, String program, String traseuTuristic) {
+@Entity (tableName = "parcuri")
+public class Parc {
+    @PrimaryKey(autoGenerate = true)
+    private int idMParc;
+    @ColumnInfo(name = "localizare")
+    private String localizare;
+    @ColumnInfo(name="program")
+    private String program;
+    @ColumnInfo(name = "traseu")
+    private String traseuTuristic;
+    @ColumnInfo(name = "pret")
+    private int pret;
+
+    public Parc(String localizare, String program, String traseuTuristic, int pret) {
         this.localizare = localizare;
         this.program = program;
         this.traseuTuristic = traseuTuristic;
+        this.pret = pret;
+    }
+
+    public int getIdMParc() {
+        return idMParc;
+    }
+
+    public void setIdMParc(int idMParc) {
+        this.idMParc = idMParc;
     }
 
     public String getLocalizare() {
@@ -35,12 +56,22 @@ public class Parc {
         this.traseuTuristic = traseuTuristic;
     }
 
+    public int getPret() {
+        return pret;
+    }
+
+    public void setPret(int pret) {
+        this.pret = pret;
+    }
+
     @Override
     public String toString() {
         return "Parc{" +
-                "localizare='" + localizare + '\'' +
+                "idMParc=" + idMParc +
+                ", localizare='" + localizare + '\'' +
                 ", program='" + program + '\'' +
                 ", traseuTuristic='" + traseuTuristic + '\'' +
+                ", pret=" + pret +
                 '}';
     }
 }
