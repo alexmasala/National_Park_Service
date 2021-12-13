@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1052150241812",
+    "project_id": "dam-project-efa06",
+    "storage_bucket": "dam-project-efa06.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052150241812:android:2b7ef2702bd4e23274a501",
+        "android_client_info": {
+          "package_name": "ro.ase.seminar1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052150241812-801jlf67o1rd6tp28bmuo91asfv86lgk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIFtyj2fWmIjTMkq0lsSpPDnpRCkjQPlI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052150241812-801jlf67o1rd6tp28bmuo91asfv86lgk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

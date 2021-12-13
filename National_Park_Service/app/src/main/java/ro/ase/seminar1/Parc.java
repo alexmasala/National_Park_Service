@@ -17,6 +17,13 @@ public class Parc {
     @ColumnInfo(name = "pret")
     private int pret;
 
+    public Parc(){
+        this.localizare = "necunoscuta";
+        this.program = "necunoscut";
+        this.traseuTuristic = "necunoscut";
+        this.pret = 0;
+    }
+
     public Parc(String localizare, String program, String traseuTuristic, int pret) {
         this.localizare = localizare;
         this.program = program;
@@ -73,5 +80,13 @@ public class Parc {
                 ", traseuTuristic='" + traseuTuristic + '\'' +
                 ", pret=" + pret +
                 '}';
+    }
+
+    public String toStringFB() {
+        return "Parc: " +
+                "localizare='" + localizare + '\'' +
+                ", program='" + program + '\'' +
+                ", traseuTuristic='" + traseuTuristic + '\'' +
+                ", pret=" + pret;
     }
 }
