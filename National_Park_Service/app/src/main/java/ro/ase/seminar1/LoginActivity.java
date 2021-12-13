@@ -12,6 +12,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +77,8 @@ private ListView lv;
                     }
                 });
                 thread1.start();
+                writeToDataBase();
+                readFromDatabase();
             }
         });
 
@@ -97,6 +105,37 @@ private ListView lv;
         lst.add(new Parc("Parcul din Cluj","09:00 - 22:00","Traseul Dubrava",10));
         lst.add(new Parc("Parcul din Bucuresti","09:00 - 22:00","Traseul Apalachia",15));
         return lst;
+    }
+
+    private void writeToDataBase(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance("https://dam-project-efa06-default-rtdb.firebaseio.com/");
+        DatabaseReference myRef = database.getReference("Parcuri");
+        for (int i=0;i<getParcuri().size();i++){
+            Parc p = new Parc (getParcuri().get(i).getLocalizare(),getParcuri().get(i).getProgram(),
+                    getParcuri().get(i).getTraseuTuristic(),getParcuri().get(i).getPret());
+            myRef.child("Parc numar "+ i).setValue(p);
+        }
+    }
+    private void readFromDatabase(){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("Parcuri");
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
+                    Parc p = new Parc(dataSnapshot1.getValue(Parc.class).getLocalizare(),
+                            dataSnapshot1.getValue(Parc.class).getProgram(),
+                            dataSnapshot1.getValue(Parc.class).getTraseuTuristic(),
+                            dataSnapshot1.getValue(Parc.class).getPret());
+                    Log.d("citire","Parc citit " + p.toStringFB());
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.w("cancelled", "Failed to read value.", error.toException());
+            }
+        });
     }
 
     @Override
